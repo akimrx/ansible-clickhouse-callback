@@ -2,7 +2,7 @@
 Plugin for sending telemetry from Ansible to Clickhouse storage
 
 
-## Compability
+## Compatibility
 
 This plugin was tested on version >= 2.9 with [a structure that is recommended by the community](https://docs.ansible.com/ansible/2.8/user_guide/playbooks_best_practices.html#alternative-directory-layout).
 
