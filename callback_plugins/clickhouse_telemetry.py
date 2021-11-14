@@ -95,7 +95,7 @@ DOCUMENTATION = """
         ini:
           - section: callback_clickhouse_telemetry
             key: clickhouse_pure_threshold
-        default: 80
+        default: 75
       clickhouse_tz:
         description: Timezone.
         required: False
@@ -209,7 +209,7 @@ class CallbackModule(CallbackBase):
         self.clickhouse_logs_table = self.get_option("clickhouse_logs_table")
         self.clickhouse_tasks_table = self.get_option("clickhouse_tasks_table") or None
         self.clickhouse_timeout = self.get_option("clickhouse_timeout") or 5
-        self.clickhouse_pure_threshold = self.get_option("clickhouse_pure_threshold") or 80
+        self.clickhouse_pure_threshold = self.get_option("clickhouse_pure_threshold") or 75
         self.operator = self.get_option("ansible_operator") or getpass.getuser()
         self.clickhouse_tz = self.get_option("clickhouse_tz") or None
 
@@ -342,7 +342,7 @@ class CallbackModule(CallbackBase):
             percent_diff = 0
 
         return dict(
-            is_pure=True if total > 0 and percent_diff >= int(self.clickhouse_pure_threshold) else False,
+            is_pure=False if total > 0 and percent_diff >= int(self.clickhouse_pure_threshold) else True,
             percent=percent_diff,
             not_changed=self.ok,
             total_tasks=total,
