@@ -1,7 +1,17 @@
 # Ansible Clickhouse Telemetry
 Plugin for sending telemetry from Ansible to Clickhouse storage
 
-# Prepare
+
+## Compability
+
+This plugin was tested on version >= 2.9 with [a structure that is recommended by the community](https://docs.ansible.com/ansible/2.8/user_guide/playbooks_best_practices.html#alternative-directory-layout).
+
+If the plugin does not work correctly with your structure or version, it is recommended to start an issue and provide details
+* Your ansible directory structure
+* Ansible version
+* Configuration parameters for a plugin without sensitive data
+
+## Installation
 
 * Copy `clickhouse_telemetry.py` to the `callback_plugins` directory.
 
@@ -31,9 +41,9 @@ Plugin for sending telemetry from Ansible to Clickhouse storage
     ```
 
 
-# Example data
+## Example data
 
-## Logs
+### Logs
 ```sql
 SELECT *
 FROM `ansible`.`logs`
@@ -69,7 +79,7 @@ pure_play:               0
 1 rows in set. Elapsed: 0.003 sec. 
 ```
 
-## Tasks
+### Tasks
 ```sql
 SELECT *
 FROM `ansible`.`tasks`
