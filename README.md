@@ -11,6 +11,12 @@ If the plugin does not work correctly with your structure or version, it is reco
 * Ansible version
 * Configuration parameters for a plugin without sensitive data
 
+## Special attention
+
+If you have a lot of Ansible startup events, it's best to create a [buffer table](https://clickhouse.com/docs/en/engines/table-engines/special/buffer/) and write to it. A large number of events means more than several simultaneous completions of the playbook.
+
+If one playbook is completed every 1-10 seconds, there is no need for buffer tables.
+
 ## Installation
 
 * Copy `clickhouse_telemetry.py` to the `callback_plugins` directory.
