@@ -1,37 +1,37 @@
-# ansible-ch-telemetry
+# Ansible Clickhouse Telemetry
 Plugin for sending telemetry from Ansible to Clickhouse storage
 
 # Prepare
-* Copy `clickhouse_telemetry.py` to the callback_plugins dir.
+
+* Copy `clickhouse_telemetry.py` to the `callback_plugins` directory.
 
 * Create database and tables in the Clickhouse:
-```shell
-clickhouse-client < install.sql
-```
+    ```shell
+    clickhouse-client < install.sql
+    ```
 
 * Update your `ansible.cfg`:
-```ini
-[defaults]
-callback_plugins = /path/to/callback_plugins_dir
-callback_whitelist = clickhouse_telemetry
+    ```ini
+    [defaults]
+    callback_plugins = /path/to/callback_plugins_dir
+    callback_whitelist = clickhouse_telemetry
 
 
-[callback_clickhouse_telemetry]
-clickhouse_url = "http://localhost:8123"
-clickhouse_user = "ansible"
-clickhouse_password = "strong_password"
-clickhouse_database = "ansible"
-clilckhouse_logs_table = "logs"
-clickhouse_tasks_table = "tasks"
-clickhouse_timeout = 5
-clickhouse_pure_threshold = 80
-clickhouse_tz = "Europe/Moscow"
-ansible_operator = "username"
-```
+    [callback_clickhouse_telemetry]
+    clickhouse_url = "http://localhost:8123"
+    clickhouse_user = "ansible"
+    clickhouse_password = "strong_password"
+    clickhouse_database = "ansible"
+    clilckhouse_logs_table = "logs"
+    clickhouse_tasks_table = "tasks"
+    clickhouse_timeout = 5
+    clickhouse_pure_threshold = 80
+    clickhouse_tz = "Europe/Moscow"
+    ansible_operator = "username"
+    ```
 
 
 # Example data
-
 
 ## Logs
 ```sql
@@ -39,6 +39,7 @@ SELECT *
 FROM `ansible`.`logs`
 ORDER BY event_date DESC
 LIMIT 1
+FORMAT Vertical
 
 Row 1:
 ──────
@@ -57,7 +58,7 @@ tags:                    ['firewall']
 skipped_tags:            []
 extra_vars:              []
 limit_expression:        srv*
-hosts:                   ['srv01-yndx.akimrx.cloud', 'srv02-yndx.akimrx.cloud]
+hosts:                   ['srv01-yndx.akimrx.cloud', 'srv02-yndx.akimrx.cloud']
 affected_hosts_count:    2
 unreachable_hosts_count: 0
 failed_hosts_count:      0
