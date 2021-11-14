@@ -260,7 +260,7 @@ class CallbackModule(CallbackBase):
             start_time=self.start_time.strftime(DATETIME_FMT),
             end_time=end_time.strftime(DATETIME_FMT),
             duration=int(duration.total_seconds()),
-            user=self.operator or getpass.getuser(),
+            user=self.operator,
             hostname=self.hostname,
             inventory=self.inventory,
             playbook=self.playbook,
@@ -280,13 +280,12 @@ class CallbackModule(CallbackBase):
             pure_play=self._pure_play(stats).get("is_pure", False),
         )
 
-        print(self.__dict__)
-
         self._send_event(
             self.clickhouse_database,
             self.clickhouse_logs_table,
             json.dumps(event)
         )
+
         if self.clickhouse_tasks_table:
             self._send_event(
                 self.clickhouse_database,
